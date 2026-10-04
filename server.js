@@ -15,6 +15,6 @@ app.get('/api/tracks',async(req,res)=>{try{const q=String(req.query.q||'');const
 app.get('/api/artists',async(req,res)=>{try{res.json((await pool.query('SELECT * FROM artists ORDER BY name')).rows)}catch(e){res.status(500).json({error:'database_error'})}});
 app.get('/api/albums',async(req,res)=>{try{res.json((await pool.query('SELECT * FROM albums ORDER BY release_date DESC NULLS LAST')).rows)}catch(e){res.status(500).json({error:'database_error'})}});
 app.use(express.static(path.join(__dirname,'web')));
-app.app.get(/.*/,(req,res)=>res.sendFile(path.join(__dirname,'web','index.html')));
+app.get(/.*/,(req,res)=>res.sendFile(path.join(__dirname,'web','index.html')));
 const port=process.env.PORT||10000;
 init().then(()=>app.listen(port,'0.0.0.0',()=>console.log(`FA200Music listening on ${port}`))).catch(e=>{console.error(e);process.exit(1)});
