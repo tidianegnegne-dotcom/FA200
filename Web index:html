@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FA200Music</title>
+
+<style>
+:root{
+  --bg:#090b0d;
+  --card:#12161a;
+  --card2:#181d22;
+  --text:#f4f4f4;
+  --muted:#9da3aa;
+  --accent:#f5c400;
+  --border:#292e33;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+.app{
+  max-width:900px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:170px;
+}
+
+/* HEADER */
+
+header{
+  padding:22px 20px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:var(--card);
+  color:white;
+  font-size:20px;
+}
+
+/* SEARCH */
+
+.search{
+  margin:0 20px 20px;
+  background:#1a1f24;
+  border-radius:14px;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.search span{
+  color:#858b92;
+  font-size:20px;
+}
+
+.search input{
+  width:100%;
+  background:transparent;
+  border:0;
+  outline:none;
+  color:white;
+  padding:14px 0;
+  font-size:14px;
+}
+
+/* SECTIONS */
+
+section{
+  padding:0 20px;
+  margin:24px 0;
+}
+
+.title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.title h2{
+  font-size:20px;
+  margin:0;
+}
+
+.title button{
+  border:0;
+  background:none;
+  color:var(--muted);
+}
+
+/* HERO */
+
+.hero{
+  background:
+    linear-gradient(135deg,#1b2025,#29200d);
+  border-radius:22px;
+  padding:28px;
+  min-height:220px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+}
+
+.hero small{
+  color:#d0d0d0;
+}
+
+.hero h1{
+  margin:7px 0 15px;
+  font-size:32px;
+  line-height:1.15;
+  max-width:600px;
+}
+
+.btn{
+  display:inline-block;
+  width:max-content;
+  background:var(--accent);
+  color:#111;
+  border:0;
+  border-radius:24px;
+  padding:12px 20px;
+  font-weight:700;
+}
+
+/* CARDS */
+
+.row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:5px;
+}
+
+.row::-webkit-scrollbar{
+  display:none;
+}
+
+.cover{
+  min-width:150px;
+}
+
+.art{
+  height:150px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#252a30,#5b3b00);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:18px;
+  text-align:center;
+  padding:8px;
+}
+
+.cover:nth-child(2) .art{
+  background:linear-gradient(145deg,#172a42,#5c0b46);
+}
+
+.cover:nth-child(3) .art{
+  background:linear-gradient(145deg,#40210d,#263e24);
+}
+
+.cover:nth-child(4) .art{
+  background:linear-gradient(145deg,#27133d,#15403e);
+}
+
+.cover p{
+  margin:8px 2px 0;
+  font-size:14px;
+}
+
+.cover small{
+  color:var(--muted);
+}
+
+/* TRACKS */
+
+.tracks{
+  display:flex;
+  flex-direction:column;
+}
+
+.track{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.thumb{
+  width:52px;
+  height:52px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#33200b,#20252a);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:700;
+  flex-shrink:0;
+}
+
+.track-info{
+  flex:1;
+  min-width:0;
+}
+
+.track-info b{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.track-info small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.play{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:0;
+  background:#22272c;
+  color:white;
+  font-size:16px;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+
+/* STATUS */
+
+.status{
+  margin:0 20px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#11161a;
+  color:var(--muted);
+  font-size:13px;
+  display:none;
+}
+
+/* PLAYER */
+
+.player{
+  position:fixed;
+  z-index:20;
+  bottom:72px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(900px,100%);
+  background:#171b1f;
+  border-top:1px solid var(--border);
+  padding:10px 15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  backdrop-filter:blur(15px);
+}
+
+.player .mini{
+  width:46px;
+  height:46px;
+  border-radius:9px;
+  background:linear-gradient(135deg,#4b2d0c,#191d21);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:bold;
+  flex-shrink:0;
+}
+
+.player-info{
+  flex:1;
+  min-width:0;
+}
+
+.player-info b{
+  font-size:13px;
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.player-info small{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.player button{
+  border:0;
+  background:none;
+  color:white;
+  font-size:22px;
+}
+
+.progress{
+  position:absolute;
+  left:0;
+  right:0;
+  top:-2px;
+  height:3px;
+  background:#292e33;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:var(--accent);
+}
+
+/* NAV */
+
+nav{
+  position:fixed;
+  z-index:21;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(900px,100%);
+  height:72px;
+  background:#101316ee;
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #252a2f;
+}
+
+nav button{
+  background:none;
+  border:0;
+  color:#8f969d;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  align-items:center;
+}
+
+nav button span:first-child{
+  font-size:21px;
+}
+
+nav button.active{
+  color:var(--accent);
+}
+
+/* DESKTOP */
+
+@media(min-width:700px){
+
+  body{
+    padding:20px;
+  }
+
+  .app{
+    background:var(--bg);
+    border-radius:24px;
+  }
+
+  nav,
+  .player{
+    border-radius:0;
+  }
+
+  .hero{
+    min-height:280px;
+  }
+
+  .hero h1{
+    font-size:40px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">
+    FA200<span>Music</span>
+  </div>
+
+  <div class="header-actions">
+    <button class="icon-btn" onclick="loadTracks()" title="Actualiser">
+      ↻
+    </button>
+  </div>
+</header>
+
+
+<!-- RECHERCHE -->
+
+<div class="search">
+  <span>⌕</span>
+
+  <input
+    id="searchInput"
+    type="search"
+    placeholder="Rechercher un artiste, un titre, un album..."
+    oninput="searchTracks()"
+  >
+</div>
+
+
+<div id="status" class="status"></div>
+
+
+<!-- ACCUEIL -->
+
+<main id="homePage">
+
+<section>
+
+  <div class="hero">
+
+    <small>Recommandé pour vous</small>
+
+    <h1>
+      Les meilleures sonorités du moment
+    </h1>
+
+    <button
+      class="btn"
+      onclick="playDemo()"
+    >
+      ▶ Écouter maintenant
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- NOUVEAUTÉS -->
+
+<section>
+
+  <div class="title">
+    <h2>Nouveautés</h2>
+    <button onclick="loadTracks()">Tout voir</button>
+  </div>
+
+  <div class="row">
+
+    <div class="cover">
+      <div class="art">
+        ÉCLIPSE
+      </div>
+
+      <p>Éclipse</p>
+      <small>FA200 Prod</small>
+    </div>
+
+
+    <div class="cover">
+      <div class="art">
+        RÊVE<br>URBAIN
+      </div>
+
+      <p>Rêve urbain</p>
+      <small>FA200 Prod</small>
+    </div>
+
+
+    <div class="cover">
+      <div class="art">
+        SANS<br>LIMITES
+      </div>
+
+      <p>Sans limites</p>
+      <small>FA200 Prod</small>
+    </div>
+
+
+    <div class="cover">
+      <div class="art">
+        DANS<br>MA TÊTE
+      </div>
+
+      <p>Dans ma tête</p>
+      <small>FA200 Prod</small>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TITRES -->
+
+<section>
+
+  <div class="title">
+    <h2 id="tracksTitle">Titres populaires</h2>
+  </div>
+
+  <div id="tracks" class="tracks"></div>
+
+</section>
+
+</main>
+
+
+<!-- BIBLIOTHÈQUE -->
+
+<section id="libraryPage" style="display:none">
+
+  <div class="title">
+    <h2>Ma bibliothèque</h2>
+  </div>
+
+  <div class="empty">
+    <div style="font-size:40px">♫</div>
+    <p>
+      Ta bibliothèque musicale apparaîtra ici.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- PROFIL -->
+
+<section id="profilePage" style="display:none">
+
+  <div class="hero">
+
+    <small>FA200Music</small>
+
+    <h1>
+      Ton espace musical
+    </h1>
+
+    <p style="color:#ccc">
+      Connecte-toi à ton compte lorsque
+      le système d'authentification sera activé.
+    </p>
+
+  </div>
+
+</section>
+
+
+</div>
+
+
+<!-- PLAYER -->
+
+<div class="player">
+
+  <div class="progress">
+    <div
+      id="progressBar"
+      class="progress-bar"
+    ></div>
+  </div>
+
+  <div class="mini">
+    FA200
+  </div>
+
+  <div class="player-info">
+
+    <b id="now">
+      Aucune lecture
+    </b>
+
+    <small id="artist">
+      FA200Music
+    </small>
+
+  </div>
+
+  <button
+    id="previousBtn"
+    onclick="previousTrack()"
+  >
+    ‹
+  </button>
+
+  <button
+    id="playBtn"
+    onclick="togglePlayer()"
+  >
+    ▶
+  </button>
+
+  <button
+    id="nextBtn"
+    onclick="nextTrack()"
+  >
+    ›
+  </button>
+
+</div>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+  <button
+    id="navHome"
+    class="active"
+    onclick="showPage('home')"
+  >
+    <span>⌂</span>
+    <span>Accueil</span>
+  </button>
+
+
+  <button
+    onclick="focusSearch()"
+  >
+    <span>⌕</span>
+    <span>Explorer</span>
+  </button>
+
+
+  <button
+    id="navLibrary"
+    onclick="showPage('library')"
+  >
+    <span>▣</span>
+    <span>Bibliothèque</span>
+  </button>
+
+
+  <button
+    id="navProfile"
+    onclick="showPage('profile')"
+  >
+    <span>♙</span>
+    <span>Profil</span>
+  </button>
+
+</nav>
+
+
+<audio id="audio"></audio>
+
+
+<script>
+
+/* =========================
+   FA200MUSIC
+   ========================= */
+
+const API = "/api";
+
+const audio = document.getElementById("audio");
+
+let tracks = [];
+let currentIndex = -1;
+let playing = false;
+
+
+/* =========================
+   DONNÉES DE SECOURS
+   ========================= */
+
+const demoTracks = [
+
+  {
+    id:"demo1",
+    title:"Calm",
+    artist:"FA200 Prod",
+    album:"FA200Music",
+    duration_seconds:204,
+    audio_url:""
+  },
+
+  {
+    id:"demo2",
+    title:"Sunset",
+    artist:"FA200 Prod",
+    album:"FA200Music",
+    duration_seconds:217,
+    audio_url:""
+  },
+
+  {
+    id:"demo3",
+    title:"Dreams",
+    artist:"FA200 Prod",
+    album:"FA200Music",
+    duration_seconds:178,
+    audio_url:""
+  }
+
+];
+
+
+/* =========================
+   CHARGER LES TITRES
+   ========================= */
+
+async function loadTracks(){
+
+  setStatus("Chargement de la bibliothèque...");
+
+  try{
+
+    const response =
+      await fetch(API + "/tracks");
+
+    if(!response.ok){
+      throw new Error("API indisponible");
+    }
+
+    const data =
+      await response.json();
+
+    tracks =
+      Array.isArray(data)
+        ? data
+        : [];
+
+    if(tracks.length === 0){
+      tracks = demoTracks;
+    }
+
+    renderTracks();
+
+    hideStatus();
+
+  }catch(error){
+
+    console.warn(error);
+
+    tracks = demoTracks;
+
+    renderTracks();
+
+    setStatus(
+      "Mode démonstration : la base musicale n'est pas encore configurée."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   AFFICHER LES TITRES
+   ========================= */
+
+function renderTracks(list = tracks){
+
+  const container =
+    document.getElementById("tracks");
+
+  container.innerHTML = "";
+
+  if(!list.length){
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun titre trouvé.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.forEach((track,index)=>{
+
+    const title =
+      track.title || "Titre sans nom";
+
+    const artist =
+      track.artist ||
+      track.artist_name ||
+      "Artiste inconnu";
+
+    const duration =
+      formatDuration(track.duration_seconds);
+
+
+    const item =
+      document.createElement("div");
+
+    item.className = "track";
+
+
+    item.innerHTML = `
+
+      <div class="thumb">
+        ${escapeHtml(title.substring(0,8).toUpperCase())}
+      </div>
+
+      <div class="track-info">
+
+        <b>
+          ${escapeHtml(title)}
+        </b>
+
+        <small>
+          ${escapeHtml(artist)}
+          ${duration ? " · " + duration : ""}
+        </small>
+
+      </div>
+
+      <button
+        class="play"
+        onclick="playTrack(${index})"
+      >
+        ▶
+      </button>
+
+    `;
+
+
+    container.appendChild(item);
+
+  });
+
+}
+
+
+/* =========================
+   LECTURE
+   ========================= */
+
+function playTrack(index){
+
+  if(!tracks[index]){
+    return;
+  }
+
+  currentIndex = index;
+
+  const track =
+    tracks[index];
+
+
+  document.getElementById("now")
+    .textContent =
+      track.title || "Titre";
+
+
+  document.getElementById("artist")
+    .textContent =
+      track.artist ||
+      track.artist_name ||
+      "FA200Music";
+
+
+  if(track.audio_url){
+
+    audio.src =
+      track.audio_url;
+
+    audio.play()
+      .then(()=>{
+
+        playing = true;
+
+        updatePlayButton();
+
+      })
+      .catch(error=>{
+
+        console.warn(error);
+
+        playing = false;
+
+        updatePlayButton();
+
+      });
+
+  }else{
+
+    /*
+      Pour les titres de démonstration,
+      il n'y a pas encore de fichier audio.
+    */
+
+    playing = !playing;
+
+    updatePlayButton();
+
+  }
+
+}
+
+
+/* =========================
+   PLAY / PAUSE
+   ========================= */
+
+function togglePlayer(){
+
+  if(currentIndex === -1){
+
+    playTrack(0);
+
+    return;
+
+  }
+
+
+  if(!audio.src){
+
+    playing = !playing;
+
+    updatePlayButton();
+
+    return;
+
+  }
+
+
+  if(audio.paused){
+
+    audio.play();
+
+    playing = true;
+
+  }else{
+
+    audio.pause();
+
+    playing = false;
+
+  }
+
+
+  updatePlayButton();
+
+}
+
+
+/* =========================
+   PREVIOUS
+   ========================= */
+
+function previousTrack(){
+
+  if(!tracks.length){
+    return;
+  }
+
+  let index =
+    currentIndex - 1;
+
+  if(index < 0){
+    index = tracks.length - 1;
+  }
+
+  playTrack(index);
+
+}
+
+
+/* =========================
+   NEXT
+   ========================= */
+
+function nextTrack(){
+
+  if(!tracks.length){
+    return;
+  }
+
+  let index =
+    currentIndex + 1;
+
+  if(index >= tracks.length){
+    index = 0;
+  }
+
+  playTrack(index);
+
+}
+
+
+/* =========================
+   PLAY DEMO
+   ========================= */
+
+function playDemo(){
+
+  if(!tracks.length){
+    tracks = demoTracks;
+  }
+
+  playTrack(0);
+
+}
+
+
+/* =========================
+   BOUTON PLAY
+   ========================= */
+
+function updatePlayButton(){
+
+  document.getElementById("playBtn")
+    .textContent =
+      playing ? "Ⅱ" : "▶";
+
+}
+
+
+/* =========================
+   PROGRESSION
+   ========================= */
+
+audio.addEventListener(
+  "timeupdate",
+  ()=>{
+
+    if(!audio.duration){
+      return;
+    }
+
+    const percent =
+      (audio.currentTime /
+       audio.duration) * 100;
+
+    document.getElementById(
+      "progressBar"
+    ).style.width =
+      percent + "%";
+
+  }
+);
+
+
+/* =========================
+   FIN DU TITRE
+   ========================= */
+
+audio.addEventListener(
+  "ended",
+  ()=>{
+
+    playing = false;
+
+    updatePlayButton();
+
+    nextTrack();
+
+  }
+);
+
+
+/* =========================
+   RECHERCHE
+   ========================= */
+
+let searchTimer;
+
+
+function searchTracks(){
+
+  clearTimeout(searchTimer);
+
+
+  searchTimer =
+    setTimeout(async()=>{
+
+      const q =
+        document.getElementById(
+          "searchInput"
+        ).value.trim();
+
+
+      if(!q){
+
+        renderTracks();
+
+        document.getElementById(
+          "tracksTitle"
+        ).textContent =
+          "Titres populaires";
+
+        return;
+
+      }
+
+
+      try{
+
+        const response =
+          await fetch(
+            API +
+            "/tracks?q=" +
+            encodeURIComponent(q)
+          );
+
+
+        if(!response.ok){
+          throw new Error("Recherche indisponible");
+        }
+
+
+        const data =
+          await response.json();
+
+
+        tracks =
+          Array.isArray(data)
+            ? data
+            : [];
+
+
+        renderTracks();
+
+
+        document.getElementById(
+          "tracksTitle"
+        ).textContent =
+          "Résultats de recherche";
+
+
+      }catch(error){
+
+        const results =
+          demoTracks.filter(track=>
+
+            track.title
+              .toLowerCase()
+              .includes(q.toLowerCase())
+
+            ||
+
+            track.artist
+              .toLowerCase()
+              .includes(q.toLowerCase())
+
+          );
+
+
+        renderTracks(results);
+
+
+        document.getElementById(
+          "tracksTitle"
+        ).textContent =
+          "Résultats de recherche";
+
+      }
+
+    },250);
+
+}
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+function showPage(page){
+
+  const home =
+    document.getElementById("homePage");
+
+  const library =
+    document.getElementById("libraryPage");
+
+  const profile =
+    document.getElementById("profilePage");
+
+
+  home.style.display = "none";
+  library.style.display = "none";
+  profile.style.display = "none";
+
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+
+  if(page === "home"){
+
+    home.style.display = "block";
+
+    document
+      .getElementById("navHome")
+      .classList.add("active");
+
+  }
+
+
+  if(page === "library"){
+
+    library.style.display = "block";
+
+    document
+      .getElementById("navLibrary")
+      .classList.add("active");
+
+  }
+
+
+  if(page === "profile"){
+
+    profile.style.display = "block";
+
+    document
+      .getElementById("navProfile")
+      .classList.add("active");
+
+  }
+
+}
+
+
+/* =========================
+   FOCUS RECHERCHE
+   ========================= */
+
+function focusSearch(){
+
+  showPage("home");
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+  input.focus();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   STATUS
+   ========================= */
+
+function setStatus(message){
+
+  const element =
+    document.getElementById("status");
+
+  element.textContent =
+    message;
+
+  element.style.display =
+    "block";
+
+}
+
+
+function hideStatus(){
+
+  const element =
+    document.getElementById("status");
+
+  element.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   DURÉE
+   ========================= */
+
+function formatDuration(seconds){
+
+  if(!seconds){
+    return "";
+  }
+
+  seconds =
+    Number(seconds);
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const remaining =
+    Math.floor(seconds % 60);
+
+  return (
+    minutes +
+    ":" +
+    String(remaining).padStart(2,"0")
+  );
+
+}
+
+
+/* =========================
+   SÉCURITÉ HTML
+   ========================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   INITIALISATION
+   ========================= */
+
+loadTracks();
+
+</script>
+
+</body>
+</html>
