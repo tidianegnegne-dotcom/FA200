@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: fa200music
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fa200music-db
+          property: connectionString
+
+databases:
+  - name: fa200music-db
+    plan: free
+    region: frankfurt
+    databaseName: fa200music
+    user: fa200music

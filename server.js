@@ -1,0 +1,20 @@
+import express from 'express';
+import cors from 'cors';
+import pg from 'pg';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const { Pool } = pg;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const app = express();
+const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false });
+app.use(cors()); app.use(express.json());
+async function init(){ if(!process.env.DATABASE_URL) return; const sql=await fs.readFile(path.join(__dirname,'db/schema.sql'),'utf8'); await pool.query(sql); }
+app.get('/health',(req,res)=>res.json({ok:true,service:'FA200Music'}));
+app.get('/api/tracks',async(req,res)=>{try{const q=String(req.query.q||'');const r=await pool.query(`SELECT t.id,t.title,t.audio_url,t.cover_url,t.duration_seconds,a.name AS artist,al.title AS album FROM tracks t LEFT JOIN artists a ON a.id=t.artist_id LEFT JOIN albums al ON al.id=t.album_id WHERE t.title ILIKE $1 OR COALESCE(a.name,'') ILIKE $1 OR COALESCE(al.title,'') ILIKE $1 ORDER BY t.created_at DESC`,[`%${q}%`]);res.json(r.rows)}catch(e){console.error(e);res.status(500).json({error:'database_error'})}});
+app.get('/api/artists',async(req,res)=>{try{res.json((await pool.query('SELECT * FROM artists ORDER BY name')).rows)}catch(e){res.status(500).json({error:'database_error'})}});
+app.get('/api/albums',async(req,res)=>{try{res.json((await pool.query('SELECT * FROM albums ORDER BY release_date DESC NULLS LAST')).rows)}catch(e){res.status(500).json({error:'database_error'})}});
+app.use(express.static(path.join(__dirname,'web')));
+app.get('*',(req,res)=>res.sendFile(path.join(__dirname,'web','index.html')));
+const port=process.env.PORT||10000;
+init().then(()=>app.listen(port,'0.0.0.0',()=>console.log(`FA200Music listening on ${port}`))).catch(e=>{console.error(e);process.exit(1)});
